@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aviator Demo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #090b12;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            height: 65px;
+            background: #111522;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            border-bottom: 1px solid #252a3a;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff3b30;
+        }
+
+        .balance {
+            background: #1b2030;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 15px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .game-box {
+            background: #111522;
+            border: 1px solid #252a3a;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #252a3a;
+        }
+
+        .status {
+            font-size: 13px;
+            color: #9da5ba;
+        }
+
+        .history {
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            padding: 12px;
+            background: #0d1019;
+        }
+
+        .history span {
+            padding: 6px 10px;
+            border-radius: 12px;
+            background: #202638;
+            color: #65d6ff;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .history .low {
+            color: #ff6565;
+        }
+
+        .sky {
+            height: 390px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 30%, #202c4b 0%, #11182a 40%, #090b12 75%);
+        }
+
+        .grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.18;
+            background-image:
+                linear-gradient(#6e7890 1px, transparent 1px),
+                linear-gradient(90deg, #6e7890 1px, transparent 1px);
+            background-size: 55px 55px;
+            transform: perspective(350px) rotateX(55deg) scale(1.5);
+            transform-origin: bottom;
+        }
+
+        .multiplier {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 58px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 25px rgba(255,255,255,.25);
+            z-index: 3;
+        }
+
+        .multiplier.running {
+            color: #66e3ff;
+        }
+
+        .multiplier.crashed {
+            color: #ff4b4b;
+        }
+
+        .plane {
+            position: absolute;
+            left: 12%;
+            bottom: 25%;
+            font-size: 42px;
+            transform: rotate(-15deg);
+            transition: left .08s linear, bottom .08s linear;
+            z-index: 2;
+            filter: drop-shadow(0 0 10px rgba(255,70,70,.5));
+        }
+
+        .controls {
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .bet-card {
+            background: #181d2b;
+            border: 1px solid #292f42;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .bet-title {
+            color: #aab2c5;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .amount-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            width: 100%;
+            background: #0c0f18;
+            border: 1px solid #30374c;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+        }
+
+        .bet-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: #168f65;
+        }
+
+        .cash-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: #e66b19;
+        }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .info {
+            padding: 0 15px 18px;
+            color: #7f879b;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 650px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .sky {
+                height: 330px;
+            }
+
+            .multiplier {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">✈ <span>AVIATOR</span></div>
+
+    <div class="balance">
+        Demo: $<span id="balance">1000.00</span>
+    </div>
+</header>
+
+<main>
+
+    <div class="game-box">
+
+        <div class="top-bar">
+            <strong>AVIATOR</strong>
+            <div class="status" id="status">
+                Waiting for round...
+            </div>
+        </div>
+
+        <div class="history" id="history">
+            <span>1.42x</span>
+            <span>2.17x</span>
+            <span class="low">1.08x</span>
+            <span>4.63x</span>
+            <span>1.31x</span>
+        </div>
+
+        <div class="sky">
+
+            <div class="grid"></div>
+
+            <div class="multiplier" id="multiplier">
+                1.00x
+            </div>
+
+            <div class="plane" id="plane">
+                ✈️
+            </div>
+
+        </div>
+
+        <div class="controls">
+
+            <div class="bet-card">
+
+                <div class="bet-title">
+                    DEMO BET
+                </div>
+
+                <input
+                    type="number"
+                    id="betAmount"
+                    value="10"
+                    min="1"
+                    step="1"
+                >
+
+                <button
+                    class="bet-btn"
+                    id="betButton"
+                    onclick="placeBet()"
+                >
+                    BET
+                </button>
+
+            </div>
+
+            <div class="bet-card">
+
+                <div class="bet-title">
+                    CASH OUT
+                </div>
+
+                <input
+                    type="text"
+                    id="potential"
+                    value="$10.00"
+                    readonly
+                >
+
+                <button
+                    class="cash-btn"
+                    id="cashButton"
+                    onclick="cashOut()"
+                    disabled
+                >
+                    CASH OUT
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="info">
+            Demo mode only — no real-money betting is enabled.
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+let balance = 1000;
+let multiplier = 1.00;
+
+let crashPoint = 0;
+let gameRunning = false;
+let playerBet = 0;
+let cashedOut = false;
+
+let timer = null;
+
+
+/* ================================
+   ELEMENTS
+================================ */
+
+const balanceEl =
+    document.getElementById("balance");
+
+const multiplierEl =
+    document.getElementById("multiplier");
+
+const statusEl =
+    document.getElementById("status");
+
+const planeEl =
+    document.getElementById("plane");
+
+const betButton =
+    document.getElementById("betButton");
+
+const cashButton =
+    document.getElementById("cashButton");
+
+const betAmountEl =
+    document.getElementById("betAmount");
+
+const potentialEl =
+    document.getElementById("potential");
+
+const historyEl =
+    document.getElementById("history");
+
+
+/* ================================
+   BALANCE
+================================ */
+
+function updateBalance() {
+
+    balanceEl.textContent =
+        balance.toFixed(2);
+
+}
+
+
+/* ================================
+   RANDOM CRASH
+================================ */
+
+function generateCrashPoint() {
+
+    /*
+       Demo crash generator.
+
+       This is only for testing the game
+       interface and mechanics.
+    */
+
+    const random =
+        Math.random();
+
+    let point;
+
+    if (random < 0.55) {
+
+        point =
+            1.10 +
+            Math.random() * 1.40;
+
+    } else if (random < 0.85) {
+
+        point =
+            2.50 +
+            Math.random() * 3.50;
+
+    } else {
+
+        point =
+            6.00 +
+            Math.random() * 10.00;
+
+    }
+
+    return Number(point.toFixed(2));
+}
+
+
+/* ================================
+   BET
+================================ */
+
+function placeBet() {
+
+    if (gameRunning) {
+
+        alert(
+            "A round is already running."
+        );
+
+        return;
+    }
+
+    const amount =
+        Number(
+            betAmountEl.value
+        );
+
+    if (!amount || amount <= 0) {
+
+        alert(
+            "Enter a valid demo bet."
+        );
+
+        return;
+    }
+
+    if (amount > balance) {
+
+        alert(
+            "Insufficient demo balance."
+        );
+
+        return;
+    }
+
+    balance -= amount;
+
+    updateBalance();
+
+    playerBet = amount;
+
+    cashedOut = false;
+
+    startRound();
+}
+
+
+/* ================================
+   START ROUND
+================================ */
+
+function startRound() {
+
+    gameRunning = true;
+
+    multiplier = 1.00;
+
+    crashPoint =
+        generateCrashPoint();
+
+    multiplierEl.textContent =
+        "1.00x";
+
+    multiplierEl.className =
+        "multiplier running";
+
+    statusEl.textContent =
+        "Round running...";
+
+    betButton.disabled = true;
+
+    cashButton.disabled = false;
+
+    planeEl.style.left =
+        "12%";
+
+    planeEl.style.bottom =
+        "25%";
+
+    clearInterval(timer);
+
+    timer =
+        setInterval(
+            updateRound,
+            80
+        );
+}
+
+
+/* ================================
+   GAME LOOP
+================================ */
+
+function updateRound() {
+
+    multiplier += 0.025;
+
+    multiplier =
+        Number(
+            multiplier.toFixed(2)
+        );
+
+    multiplierEl.textContent =
+        multiplier.toFixed(2) + "x";
+
+    const progress =
+        Math.min(
+            (multiplier - 1) /
+            Math.max(
+                crashPoint - 1,
+                1
+            ),
+            1
+        );
+
+    planeEl.style.left =
+        (12 + progress * 70) + "%";
+
+    planeEl.style.bottom =
+        (25 + progress * 45) + "%";
+
+    potentialEl.value =
+        "$" +
+        (playerBet * multiplier)
+            .toFixed(2);
+
+    if (
+        multiplier >=
+        crashPoint
+    ) {
+
+        crashRound();
+
+    }
+}
+
+
+/* ================================
+   CRASH
+================================ */
+
+function crashRound() {
+
+    clearInterval(timer);
+
+    gameRunning = false;
+
+    multiplierEl.textContent =
+        crashPoint.toFixed(2) + "x";
+
+    multiplierEl.className =
+        "multiplier crashed";
+
+    statusEl.textContent =
+        "💥 CRASHED";
+
+    cashButton.disabled = true;
+
+    betButton.disabled = false;
+
+    potentialEl.value =
+        "$0.00";
+
+    addHistory(
+        crashPoint
+    );
+
+    playerBet = 0;
+}
+
+
+/* ================================
+   CASH OUT
+================================ */
+
+function cashOut() {
+
+    if (
+        !gameRunning ||
+        !playerBet ||
+        cashedOut
+    ) {
+
+        return;
+    }
+
+    const winnings =
+        playerBet *
+        multiplier;
+
+    balance += winnings;
+
+    updateBalance();
+
+    cashedOut = true;
+
+    cashButton.disabled = true;
+
+    statusEl.textContent =
+        "✓ Cashed out at " +
+        multiplier.toFixed(2) +
+        "x";
+
+    potentialEl.value =
+        "$" +
+        winnings.toFixed(2);
+
+    playerBet = 0;
+}
+
+
+/* ================================
+   HISTORY
+================================ */
+
+function addHistory(point) {
+
+    const item =
+        document.createElement("span");
+
+    item.textContent =
+        point.toFixed(2) + "x";
+
+    if (point < 2) {
+
+        item.className =
+            "low";
+    }
+
+    historyEl.prepend(item);
+
+    while (
+        historyEl.children.length > 12
+    ) {
+
+        historyEl.removeChild(
+            historyEl.lastChild
+        );
+
+    }
+}
+
+
+/* ================================
+   INITIALIZE
+================================ */
+
+updateBalance();
+
+</script>
+
+</body>
+              </html>
