@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aviator Dashboard</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #080a10;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    height: 64px;
+    background: #11141d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-bottom: 1px solid #252a36;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.balance {
+    background: #1b202b;
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.menu {
+    display: flex;
+    gap: 7px;
+    margin-left: 8px;
+}
+
+.menu button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.deposit {
+    background: #159447;
+}
+
+.withdraw {
+    background: #b52b2b;
+}
+
+.logout {
+    background: #252a34;
+}
+
+/* GAME */
+
+.game {
+    margin: 10px;
+    height: 390px;
+    background:
+        radial-gradient(circle at 50% 45%, #26314a 0%, #111722 35%, #090c13 75%);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.history {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+}
+
+.history span {
+    flex-shrink: 0;
+    background: #1a202c;
+    padding: 7px 11px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.multiplier {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.multiplier small {
+    display: block;
+    color: #9ca3b2;
+    margin-bottom: 5px;
+}
+
+.multiplier strong {
+    font-size: 54px;
+}
+
+.plane {
+    position: absolute;
+    left: 18%;
+    bottom: 25%;
+    font-size: 45px;
+    transform: rotate(-12deg);
+}
+
+/* BETTING */
+
+.controls {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.bet-card {
+    background: #11151e;
+    border: 1px solid #242a38;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.tabs {
+    display: flex;
+    background: #090c12;
+    padding: 4px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.tabs button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #858c9c;
+    padding: 9px;
+    border-radius: 18px;
+}
+
+.tabs .active {
+    background: #252b38;
+    color: white;
+}
+
+.amount {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.amount button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #242a36;
+    color: white;
+    font-size: 23px;
+}
+
+.amount input {
+    width: 100%;
+    background: #090c12;
+    color: white;
+    border: 1px solid #292f3d;
+    border-radius: 9px;
+    padding: 11px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.quick {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.quick button {
+    border: none;
+    background: #1b202b;
+    color: #c6cad3;
+    padding: 9px;
+    border-radius: 15px;
+}
+
+.action {
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.bet {
+    background: #159447;
+}
+
+.cash {
+    background: #e66b19;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+
+    header {
+        padding: 0 8px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    .balance {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .menu button {
+        padding: 7px 6px;
+        font-size: 10px;
+    }
+
+    .game {
+        height: 350px;
+    }
+
+    .multiplier strong {
+        font-size: 46px;
+    }
+
+    .controls {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">✈ AVIATOR</div>
+
+    <div class="balance">
+        Balance: $<span id="balance">1000.00</span>
+    </div>
+
+    <div class="menu">
+
+        <button class="deposit"
+            onclick="alert('Deposit coming soon')">
+            Deposit
+        </button>
+
+        <button class="withdraw"
+            onclick="alert('Withdraw coming soon')">
+            Withdraw
+        </button>
+
+        <button class="logout"
+            onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<section class="game">
+
+    <div class="history">
+        <span>1.24x</span>
+        <span>2.15x</span>
+        <span>1.08x</span>
+        <span>4.72x</span>
+        <span>1.63x</span>
+        <span>8.41x</span>
+    </div>
+
+    <div class="multiplier">
+
+        <small>Current multiplier</small>
+
+        <strong id="multiplier">
+            1.00x
+        </strong>
+
+    </div>
+
+    <div class="plane">
+        ✈️
+    </div>
+
+</section>
+
+
+<section class="controls">
+
+    <div class="bet-card">
+
+        <div class="tabs">
+            <button class="active">Bet</button>
+            <button>Auto</button>
+        </div>
+
+        <div class="amount">
+
+            <button onclick="changeAmount(-1)">
+                −
+            </button>
+
+            <input
+                type="number"
+                id="betAmount"
+                value="10"
+                min="1">
+
+            <button onclick="changeAmount(1)">
+                +
+            </button>
+
+        </div>
+
+        <div class="quick">
+
+            <button onclick="setAmount(100)">
+                100
+            </button>
+
+            <button onclick="setAmount(250)">
+                250
+            </button>
+
+            <button onclick="setAmount(1000)">
+                1,000
+            </button>
+
+            <button onclick="setAmount(25000)">
+                25,000
+            </button>
+
+        </div>
+
+        <button
+            class="action bet"
+            onclick="placeBet()">
+            BET
+        </button>
+
+    </div>
+
+
+    <div class="bet-card">
+
+        <div class="tabs">
+            <button class="active">Bet</button>
+            <button>Auto</button>
+        </div>
+
+        <div class="amount">
+
+            <input
+                type="text"
+                id="potential"
+                value="$10.00"
+                readonly>
+
+        </div>
+
+        <button
+            class="action cash"
+            id="cashButton"
+            onclick="cashOut()"
+            disabled>
+            CASH OUT
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+let balance = 1000;
+let currentMultiplier = 1;
+let playing = false;
+let crashed = false;
+let bet = false;
+
+function updateBalance() {
+
+    document.getElementById("balance").textContent =
+        balance.toFixed(2);
+
+}
+
+function setAmount(amount) {
+
+    document.getElementById("betAmount").value =
+        amount;
+
+}
+
+function changeAmount(change) {
+
+    const input =
+        document.getElementById("betAmount");
+
+    let value =
+        parseFloat(input.value) || 1;
+
+    value += change;
+
+    if (value < 1) value = 1;
+
+    input.value = value;
+
+}
+
+function placeBet() {
+
+    const amount =
+        parseFloat(
+            document.getElementById("betAmount").value
+        );
+
+    if (amount <= 0) {
+        alert("Enter a valid amount.");
+        return;
+    }
+
+    if (amount > balance) {
+        alert("Insufficient demo balance.");
+        return;
+    }
+
+    balance -= amount;
+
+    bet = true;
+
+    document.getElementById("cashButton").disabled =
+        false;
+
+    updateBalance();
+
+}
+
+function cashOut() {
+
+    if (!bet) return;
+
+    const amount =
+        parseFloat(
+            document.getElementById("betAmount").value
+        );
+
+    const winnings =
+        amount * currentMultiplier;
+
+    balance += winnings;
+
+    bet = false;
+
+    document.getElementById("cashButton").disabled =
+        true;
+
+    updateBalance();
+
+    alert(
+        "Cashed out at " +
+        currentMultiplier.toFixed(2) +
+        "x"
+    );
+
+}
+
+function logout() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+function startGame() {
+
+    currentMultiplier = 1;
+
+    const crashPoint =
+        1.5 + Math.random() * 7;
+
+    const timer =
+        setInterval(function () {
+
+            currentMultiplier += 0.03;
+
+            document.getElementById("multiplier")
+                .textContent =
+                currentMultiplier.toFixed(2) + "x";
+
+            if (currentMultiplier >= crashPoint) {
+
+                clearInterval(timer);
+
+                crashed = true;
+
+                document.getElementById("multiplier")
+                    .textContent =
+                    "CRASHED";
+
+                if (bet) {
+
+                    bet = false;
+
+                    document.getElementById("cashButton")
+                        .disabled = true;
+
+                }
+
+                setTimeout(
+                    startGame,
+                    2500
+                );
+
+            }
+
+        }, 100);
+
+}
+
+updateBalance();
+startGame();
+
+</script>
+
+</body>
+  </html>
