@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aviator — Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #080a10;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #ff3b30;
+        }
+
+        .card {
+            background: #11141d;
+            border: 1px solid #252a36;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8d95a6;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #b9bfcc;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            border: 1px solid #2a3040;
+            border-radius: 10px;
+            background: #090c12;
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #e66b19;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: #e66b19;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .login-btn:disabled {
+            opacity: .6;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 9px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 18px;
+            color: #858d9e;
+            font-size: 13px;
+        }
+
+        .signup-link a {
+            color: #e66b19;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #9da5b5;
+            font-size: 13px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        ✈ <span>AVIATOR</span>
+    </div>
+
+    <div class="card">
+
+        <h1>Welcome Back</h1>
+
+        <p class="subtitle">
+            Login to continue to Aviator
+        </p>
+
+        <form id="loginForm">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton">
+                LOGIN
+            </button>
+
+        </form>
+
+        <div
+            class="message"
+            id="message">
+        </div>
+
+        <div class="signup-link">
+            Don't have an account?
+            <a href="signup.html">Create account</a>
+        </div>
+
+        <a
+            class="back"
+            href="index.html">
+            ← Back to Aviator
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const form =
+    document.getElementById("loginForm");
+
+const message =
+    document.getElementById("message");
+
+const button =
+    document.getElementById("loginButton");
+
+
+function showMessage(text, success = false) {
+
+    message.textContent = text;
+
+    message.style.display = "block";
+
+    message.style.background =
+        success ? "#12351f" : "#3a1717";
+
+    message.style.color =
+        success ? "#6ee79a" : "#ff8c8c";
+}
+
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email")
+                .value.trim()
+                .toLowerCase();
+
+        const password =
+            document.getElementById("password")
+                .value;
+
+
+        const savedAccount =
+            localStorage.getItem(
+                "aviatorAccount"
+            );
+
+
+        if (!savedAccount) {
+
+            showMessage(
+                "No account found. Please sign up first."
+            );
+
+            return;
+        }
+
+
+        let account;
+
+        try {
+
+            account =
+                JSON.parse(savedAccount);
+
+        } catch (error) {
+
+            showMessage(
+                "Account data is invalid. Please sign up again."
+            );
+
+            return;
+        }
+
+
+        if (
+            email !== account.email ||
+            password !== account.password
+        ) {
+
+            showMessage(
+                "Incorrect email or password."
+            );
+
+            return;
+        }
+
+
+        localStorage.setItem(
+            "aviatorLoggedIn",
+            "true"
+        );
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "LOGIN SUCCESSFUL";
+
+
+        showMessage(
+            "Login successful. Opening Aviator...",
+            true
+        );
+
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "dashboard.html";
+
+            },
+            700
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
