@@ -277,6 +277,123 @@
         font-size: 11px;
     }
         }
+        .bet-tabs {
+    display: flex;
+    background: #0d1018;
+    border-radius: 30px;
+    padding: 4px;
+    margin-bottom: 14px;
+}
+
+.bet-tabs button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #888f9f;
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.bet-tabs .active-tab {
+    background: #202431;
+    color: white;
+}
+
+.bet-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bet-row input {
+    flex: 1;
+    text-align: center;
+    background: #0b0e15;
+    border: 1px solid #252c40;
+    color: white;
+    border-radius: 12px;
+    padding: 14px 5px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.amount-control {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: #202532;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.quick-amounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.quick-amounts button {
+    border: none;
+    background: #171b25;
+    color: #b8bdc9;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.bet-btn,
+.cash-btn {
+    width: 100%;
+    margin-top: 14px;
+    border: none;
+    border-radius: 14px;
+    padding: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.bet-btn {
+    background: #159447;
+}
+
+.cash-btn {
+    background: #e66b19;
+}
+
+.cash-card input {
+    width: 100%;
+    background: #0b0e15;
+    border: 1px solid #252c40;
+    color: white;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+
+    .controls {
+        gap: 10px;
+    }
+
+    .bet-card {
+        padding: 14px;
+    }
+
+    .bet-btn,
+    .cash-btn {
+        padding: 17px;
+        font-size: 20px;
+    }
+        }
     </style>
 </head>
 
@@ -357,55 +474,92 @@
 
         <div class="controls">
 
-            <div class="bet-card">
+    <!-- BET CARD -->
+    <div class="bet-card">
 
-                <div class="bet-title">
-                    DEMO BET
-                </div>
+        <div class="bet-tabs">
+            <button class="active-tab">Bet</button>
+            <button>Auto</button>
+        </div>
 
-                <input
-                    type="number"
-                    id="betAmount"
-                    value="10"
-                    min="1"
-                    step="1"
-                >
+        <div class="bet-row">
 
-                <button
-                    class="bet-btn"
-                    id="betButton"
-                    onclick="placeBet()"
-                >
-                    BET
-                </button>
+            <button
+                class="amount-control"
+                onclick="document.getElementById('betAmount').stepDown();">
+                −
+            </button>
 
-            </div>
+            <input
+                type="number"
+                id="betAmount"
+                value="10"
+                min="1"
+                step="1">
 
-            <div class="bet-card">
-
-                <div class="bet-title">
-                    CASH OUT
-                </div>
-
-                <input
-                    type="text"
-                    id="potential"
-                    value="$10.00"
-                    readonly
-                >
-
-                <button
-                    class="cash-btn"
-                    id="cashButton"
-                    onclick="cashOut()"
-                    disabled
-                >
-                    CASH OUT
-                </button>
-
-            </div>
+            <button
+                class="amount-control"
+                onclick="document.getElementById('betAmount').stepUp();">
+                +
+            </button>
 
         </div>
+
+        <div class="quick-amounts">
+
+            <button onclick="document.getElementById('betAmount').value=100">
+                100
+            </button>
+
+            <button onclick="document.getElementById('betAmount').value=250">
+                250
+            </button>
+
+            <button onclick="document.getElementById('betAmount').value=1000">
+                1,000
+            </button>
+
+            <button onclick="document.getElementById('betAmount').value=25000">
+                25,000
+            </button>
+
+        </div>
+
+        <button
+            class="bet-btn"
+            id="betButton"
+            onclick="placeBet()">
+            BET
+        </button>
+
+    </div>
+
+
+    <!-- CASH OUT CARD -->
+    <div class="bet-card cash-card">
+
+        <div class="bet-tabs">
+            <button class="active-tab">Bet</button>
+            <button>Auto</button>
+        </div>
+
+        <input
+            type="text"
+            id="potential"
+            value="$10.00"
+            readonly>
+
+        <button
+            class="cash-btn"
+            id="cashButton"
+            onclick="cashOut()"
+            disabled>
+            CASH OUT
+        </button>
+
+    </div>
+
+</div>
 
         <div class="info">
             Demo mode only — no real-money betting is enabled.
