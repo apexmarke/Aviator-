@@ -109,10 +109,36 @@
         }
 
         .plane {
-            font-size: 70px;
-            margin-bottom: 15px;
-            transform: rotate(-10deg);
-        }
+    position: absolute;
+    left: 12%;
+    bottom: 55px;
+    z-index: 6;
+    font-size: 70px;
+    color: #ff1744;
+    filter: drop-shadow(0 0 12px rgba(255, 23, 68, .65));
+    animation: planeFloat 2s ease-in-out infinite;
+}
+
+.aircraft {
+    transform: rotate(-18deg);
+    font-weight: bold;
+}
+
+@keyframes planeFloat {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
 
         .hero h1 {
             font-size: 52px;
@@ -236,9 +262,7 @@
                 font-size: 38px;
             }
 
-            .plane {
-                font-size: 60px;
-            }
+        
 
             .features {
                 grid-template-columns: 1fr;
@@ -287,7 +311,7 @@
         <div class="hero-content">
 
             <div class="plane">
-                ✈️
+    <div class="aircraft">✈</div>
             </div>
 
             <h1>
