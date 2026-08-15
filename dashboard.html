@@ -317,6 +317,32 @@ header {
         gap: 4px;
     }
 }
+    .deposit,
+.withdraw {
+    border: none;
+    border-radius: 9px;
+    padding: 9px 11px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.deposit {
+    background: #159447;
+}
+
+.withdraw {
+    background: #b52b2b;
+}
+
+@media (max-width: 650px) {
+
+    .deposit,
+    .withdraw {
+        padding: 8px 6px;
+        font-size: 10px;
+    }
+}
 </style>
 </head>
 
@@ -335,17 +361,22 @@ header {
         </div>
 
         <button
-            class="header-icon"
-            onclick="alert('Menu coming soon')"
-            aria-label="Menu">
-            ☰
+            class="deposit"
+            onclick="alert('Deposit coming soon')">
+            Deposit
+        </button>
+
+        <button
+            class="withdraw"
+            onclick="alert('Withdraw coming soon')">
+            Withdraw
         </button>
 
         <button
             class="header-icon"
-            onclick="alert('Notifications coming soon')"
-            aria-label="Notifications">
-            🔔
+            onclick="alert('Menu coming soon')"
+            aria-label="Menu">
+            ☰
         </button>
 
         <button
