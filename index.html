@@ -227,17 +227,99 @@
                 font-size: 48px;
             }
         }
+        .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn {
+    border: none;
+    border-radius: 7px;
+    padding: 8px 11px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+.login-btn {
+    background: #252a34;
+}
+
+.signup-btn {
+    background: #e66b19;
+}
+
+.deposit-btn {
+    background: #159447;
+}
+
+.withdraw-btn {
+    background: #b52b2b;
+}
+
+@media (max-width: 650px) {
+    header {
+        padding: 0 10px;
+    }
+
+    .header-actions {
+        gap: 4px;
+    }
+
+    .header-btn {
+        padding: 7px 6px;
+        font-size: 10px;
+    }
+
+    .balance {
+        font-size: 11px;
+    }
+        }
     </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">✈ <span>AVIATOR</span></div>
+
+    <div class="logo">
+        ✈ <span>AVIATOR</span>
+    </div>
 
     <div class="balance">
         Demo: $<span id="balance">1000.00</span>
     </div>
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn login-btn"
+            onclick="alert('Login will be added soon')">
+            Login
+        </button>
+
+        <button
+            class="header-btn signup-btn"
+            onclick="alert('Sign Up will be added soon')">
+            Sign Up
+        </button>
+
+        <button
+            class="header-btn deposit-btn"
+            onclick="alert('Deposit will be added soon')">
+            Deposit
+        </button>
+
+        <button
+            class="header-btn withdraw-btn"
+            onclick="alert('Withdraw will be added soon')">
+            Withdraw
+        </button>
+
+    </div>
+
 </header>
 
 <main>
