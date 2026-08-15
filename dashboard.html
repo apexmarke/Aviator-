@@ -343,6 +343,118 @@ header {
         font-size: 10px;
     }
 }
+    .game {
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #263653 0%,
+            #141c2d 35%,
+            #080a10 78%
+        );
+}
+
+.game::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            135deg,
+            transparent 48%,
+            rgba(255,255,255,.04) 49%,
+            transparent 50%
+        );
+    background-size: 80px 80px;
+}
+
+.game-status {
+    position: absolute;
+    top: 52px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 4;
+    font-size: 11px;
+    color: #9da5b5;
+}
+
+.game-status span:first-child {
+    color: #ff3b30;
+    font-weight: bold;
+}
+
+.multiplier {
+    z-index: 5;
+}
+
+.multiplier strong {
+    font-size: 62px;
+}
+
+.flight-path {
+    position: absolute;
+    width: 75%;
+    height: 180px;
+    left: 10%;
+    bottom: 40px;
+    border-top: 2px solid rgba(255,255,255,.10);
+    border-radius: 50%;
+    transform: rotate(-18deg);
+}
+
+.plane {
+    z-index: 6;
+    font-size: 48px;
+    animation: planeFloat 2s ease-in-out infinite;
+}
+
+.game-message {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    text-align: center;
+    color: #8992a5;
+    font-size: 11px;
+    z-index: 5;
+}
+
+@keyframes planeFloat {
+
+    0% {
+        transform: translateY(0) rotate(-10deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(-10deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(-10deg);
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .game {
+        min-height: 360px;
+    }
+
+    .multiplier strong {
+        font-size: 50px;
+    }
+
+    .game-message {
+        font-size: 10px;
+    }
+
+}
 </style>
 </head>
 
@@ -392,13 +504,20 @@ header {
 
 <section class="game">
 
-    <div class="history">
+    <div class="history" id="history">
+
         <span>1.24x</span>
         <span>2.15x</span>
         <span>1.08x</span>
         <span>4.72x</span>
         <span>1.63x</span>
         <span>8.41x</span>
+
+    </div>
+
+    <div class="game-status">
+        <span>AVIATOR</span>
+        <span>DEMO ROUND</span>
     </div>
 
     <div class="multiplier">
@@ -411,8 +530,14 @@ header {
 
     </div>
 
+    <div class="flight-path"></div>
+
     <div class="plane">
         ✈️
+    </div>
+
+    <div class="game-message">
+        Place your demo bet before the round starts
     </div>
 
 </section>
