@@ -407,6 +407,10 @@ header {
 
 <script>
 
+if (localStorage.getItem("aviatorLoggedIn") !== "true") {
+    window.location.replace("login.html");
+}
+
 let balance = 1000;
 let currentMultiplier = 1;
 let playing = false;
@@ -499,8 +503,9 @@ function cashOut() {
     );
 
 }
+ function logout() {
 
-function logout() {
+    localStorage.removeItem("aviatorLoggedIn");
 
     window.location.href =
         "index.html";
