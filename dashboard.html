@@ -1026,7 +1026,13 @@ document.getElementById("potential").textContent =
 function startGame() {
 
     currentMultiplier = 1;
+    const plane = document.querySelector(".plane");
 
+    if (plane) {
+        plane.style.left = "10%";
+        plane.style.bottom = "45px";
+        plane.style.transform = "rotate(-8deg)";
+    }
     const crashPoint =
         1.5 + Math.random() * 7;
 
@@ -1103,7 +1109,7 @@ document.getElementById("potential").textContent =
         }, 100);
 
 }
-
+startGame();
 updateBalance();
 startGame();
 
