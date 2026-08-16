@@ -1033,38 +1033,43 @@ function resetPlane() {
 function movePlane() {
 
     const plane =
-        document.getElementById(
-            "plane"
-        );
+        document.getElementById("plane");
 
     if (!plane) return;
 
     /*
-       The plane continues moving
-       according to the multiplier.
-
-       It does NOT use a CSS animation.
+       Use logarithmic movement so the
+       plane remains visible even at
+       very high multipliers such as
+       100x, 500x, or higher.
     */
 
     const progress =
-        Math.min(
-            (currentMultiplier - 1) / 8,
-            1
-        );
+        Math.log(currentMultiplier) /
+        Math.log(100);
+
+    const clampedProgress =
+        Math.min(Math.max(progress, 0), 1);
+
+    const left =
+        10 + clampedProgress * 75;
+
+    const bottom =
+        45 + clampedProgress * 170;
+
+    const rotation =
+        -8 - clampedProgress * 12;
 
     plane.style.left =
-        (10 + progress * 75)
-        + "%";
+        left + "%";
 
     plane.style.bottom =
-        (45 + progress * 180)
-        + "px";
+        bottom + "px";
 
     plane.style.transform =
         "rotate(" +
-        (-8 - progress * 12) +
+        rotation +
         "deg)";
-
 }
 
 
