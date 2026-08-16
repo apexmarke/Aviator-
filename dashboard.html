@@ -704,7 +704,147 @@ header {
         font-size: 9px;
     }
 }
+/* =========================================
+   FINAL AVIATOR BET PANEL DESIGN
+   This must be the LAST CSS before </style>
+========================================= */
 
+.controls {
+    padding: 8px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    background: #080808 !important;
+}
+
+.bet-card {
+    background: #121212 !important;
+    border: 1px solid #202020 !important;
+    border-radius: 18px !important;
+    padding: 10px !important;
+}
+
+.tabs {
+    width: 62% !important;
+    margin: 0 auto 10px !important;
+    display: flex !important;
+    background: #0b0b0b !important;
+    border-radius: 24px !important;
+    padding: 3px !important;
+}
+
+.tabs button {
+    flex: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    color: #777 !important;
+    padding: 8px !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+}
+
+.tabs .active {
+    background: #242424 !important;
+    color: #ddd !important;
+}
+
+.bet-layout {
+    display: grid !important;
+    grid-template-columns: 42% 58% !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+.bet-options {
+    min-width: 0 !important;
+}
+
+.amount {
+    display: grid !important;
+    grid-template-columns: 38px 1fr 38px !important;
+    gap: 5px !important;
+    align-items: center !important;
+}
+
+.amount-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border: none !important;
+    border-radius: 50% !important;
+    background: #1d222c !important;
+    color: #aaa !important;
+    font-size: 23px !important;
+    font-weight: bold !important;
+}
+
+.amount input {
+    width: 100% !important;
+    height: 38px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #aaa !important;
+    text-align: center !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    outline: none !important;
+}
+
+.quick {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4px !important;
+    margin-top: 5px !important;
+}
+
+.quick button {
+    border: none !important;
+    background: #151515 !important;
+    color: #777 !important;
+    padding: 7px 3px !important;
+    border-radius: 18px !important;
+    font-size: 12px !important;
+}
+
+.big-bet {
+    min-height: 105px !important;
+    width: 100% !important;
+    border: 2px solid #42933a !important;
+    border-radius: 15px !important;
+    background: #126b0b !important;
+    color: #aaa !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 25px !important;
+    cursor: pointer !important;
+}
+
+.big-bet span {
+    font-size: 25px !important;
+}
+
+.big-bet small {
+    margin-top: 2px !important;
+    font-size: 20px !important;
+}
+
+.big-bet:disabled {
+    opacity: .35 !important;
+    cursor: not-allowed !important;
+}
+
+@media (max-width: 650px) {
+
+    .controls {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bet-layout {
+        grid-template-columns: 42% 58% !important;
+    }
+
+    }
 </style>
 </head>
 
