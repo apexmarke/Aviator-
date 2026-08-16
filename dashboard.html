@@ -408,8 +408,7 @@ header {
 
     display: grid;
 
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     gap: 10px;
 }
@@ -425,57 +424,46 @@ header {
     padding: 12px;
 }
 
-.bet-header {
+.tabs {
     display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+    background: #090c12;
 
-    margin-bottom: 14px;
+    padding: 4px;
+
+    border-radius: 20px;
+
+    margin-bottom: 12px;
 }
 
-.panel-title {
-    display: block;
+.tabs button {
+    flex: 1;
 
-    font-size: 15px;
-    font-weight: 800;
+    border: none;
+
+    background: transparent;
+
+    color: #858c9c;
+
+    padding: 9px;
+
+    border-radius: 18px;
+
+    cursor: pointer;
 }
 
-.panel-subtitle {
-    display: block;
+.tabs .active {
+    background: #252b38;
 
-    margin-top: 3px;
-
-    color: #737b8d;
-
-    font-size: 10px;
-}
-
-.status-dot {
-    color: #55dc88;
-
-    font-size: 10px;
-
-    font-weight: bold;
-}
-
-.amount-label,
-.potential-label {
-    color: #747c8e;
-
-    font-size: 10px;
-
-    margin-bottom: 7px;
-
-    letter-spacing: .5px;
+    color: white;
 }
 
 .amount {
     display: flex;
 
-    align-items: center;
+    gap: 6px;
 
-    gap: 7px;
+    align-items: center;
 }
 
 .amount-btn {
@@ -486,34 +474,36 @@ header {
 
     border: none;
 
-    border-radius: 9px;
+    border-radius: 50%;
 
-    background: #252b38;
+    background: #242a36;
 
     color: white;
 
-    font-size: 22px;
+    font-size: 23px;
 
     cursor: pointer;
 }
 
 .amount input {
     width: 100%;
+
     height: 42px;
 
     background: #090c12;
 
+    color: white;
+
     border:
-        1px solid #303747;
+        1px solid #292f3d;
 
     border-radius: 9px;
 
-    color: white;
+    padding: 11px;
 
     text-align: center;
 
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 18px;
 
     outline: none;
 }
@@ -522,78 +512,35 @@ header {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        1fr 1fr;
 
-    gap: 5px;
+    gap: 6px;
 
     margin-top: 8px;
 }
 
 .quick button {
-    border:
-        1px solid #2a3040;
+    border: none;
 
-    background: #1a1f2b;
+    background: #1b202b;
 
-    color: #bfc5d1;
+    color: #c6cad3;
 
-    padding: 8px 3px;
+    padding: 9px;
 
-    border-radius: 8px;
+    border-radius: 15px;
+
+    cursor: pointer;
+}
+
+.potential-label {
+    color: #747c8e;
 
     font-size: 10px;
 
-    cursor: pointer;
-}
+    margin-bottom: 7px;
 
-.action {
-    width: 100%;
-
-    margin-top: 12px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    padding: 14px;
-
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 900;
-
-    cursor: pointer;
-}
-
-.action:disabled {
-    opacity: .4;
-
-    cursor: not-allowed;
-}
-
-.bet {
-    background: #159447;
-
-    box-shadow:
-        0 0 15px
-        rgba(21,148,71,.15);
-}
-
-.cash {
-    background: #e66b19;
-
-    box-shadow:
-        0 0 15px
-        rgba(230,107,25,.15);
-}
-
-.cash-multiplier {
-    color: #ff6565;
-
-    font-size: 16px;
-
-    font-weight: bold;
+    letter-spacing: .5px;
 }
 
 .potential {
@@ -619,6 +566,47 @@ header {
     font-weight: bold;
 }
 
+.action {
+    width: 100%;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.action:disabled {
+    opacity: .4;
+
+    cursor: not-allowed;
+}
+
+.bet {
+    background: #159447;
+}
+
+.cash {
+    background: #e66b19;
+}
+
+@media (max-width: 650px) {
+
+    .controls {
+        grid-template-columns: 1fr;
+    }
+
+}
 /* =========================
    MOBILE
 ========================= */
@@ -853,33 +841,21 @@ header {
 </section>
 
 
+
 <section class="controls">
 
     <div class="bet-card">
 
-        <div class="bet-header">
+        <div class="tabs">
 
-            <div>
+            <button class="active">
+                Bet
+            </button>
 
-                <span class="panel-title">
-                    BET
-                </span>
+            <button>
+                Auto
+            </button>
 
-                <span class="panel-subtitle">
-                    Demo round
-                </span>
-
-            </div>
-
-            <div class="status-dot">
-                ● LIVE
-            </div>
-
-        </div>
-
-
-        <div class="amount-label">
-            BET AMOUNT
         </div>
 
 
@@ -910,22 +886,22 @@ header {
 
             <button
                 onclick="setAmount(100)">
-                $100
+                100
             </button>
 
             <button
                 onclick="setAmount(250)">
-                $250
+                250
             </button>
 
             <button
                 onclick="setAmount(1000)">
-                $1K
+                1,000
             </button>
 
             <button
                 onclick="setAmount(25000)">
-                $25K
+                25,000
             </button>
 
         </div>
@@ -935,7 +911,7 @@ header {
             class="action bet"
             onclick="placeBet()">
 
-            ✈ BET & FLY
+            BET
 
         </button>
 
@@ -944,27 +920,15 @@ header {
 
     <div class="bet-card">
 
-        <div class="bet-header">
+        <div class="tabs">
 
-            <div>
+            <button class="active">
+                Bet
+            </button>
 
-                <span class="panel-title">
-                    CASH OUT
-                </span>
-
-                <span class="panel-subtitle">
-                    Current flight
-                </span>
-
-            </div>
-
-            <div
-                class="cash-multiplier"
-                id="cashMultiplier">
-
-                1.00x
-
-            </div>
+            <button>
+                Auto
+            </button>
 
         </div>
 
@@ -989,14 +953,13 @@ header {
             onclick="cashOut()"
             disabled>
 
-            💰 CASH OUT
+            CASH OUT
 
         </button>
 
     </div>
 
 </section>
-
 
 <script>
 
