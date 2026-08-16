@@ -341,7 +341,64 @@ header {
 
     z-index: 20;
 }
+/* =========================
+   CRASH / NEXT ROUND OVERLAY
+========================= */
 
+.round-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: rgba(5, 7, 12, .72);
+
+    backdrop-filter: blur(3px);
+
+    z-index: 50;
+}
+
+.round-overlay.show {
+    display: flex;
+}
+
+.round-overlay .crash-title {
+    color: #ff1744;
+    font-size: 42px;
+    font-weight: 900;
+    text-shadow:
+        0 0 15px rgba(255,23,68,.7),
+        0 0 35px rgba(255,23,68,.35);
+}
+
+.round-overlay .crash-value {
+    margin-top: 5px;
+
+    font-size: 58px;
+    font-weight: 900;
+}
+
+.round-overlay .waiting {
+    margin-top: 18px;
+
+    color: #aeb5c5;
+
+    font-size: 15px;
+}
+
+.round-overlay .countdown {
+    margin-top: 5px;
+
+    font-size: 42px;
+    font-weight: 900;
+
+    color: white;
+}
 /* =========================
    CONTROLS
 ========================= */
@@ -688,7 +745,31 @@ header {
 
 
 <section class="game">
+<div
+    class="round-overlay"
+    id="roundOverlay">
 
+    <div class="crash-title">
+        CRASHED
+    </div>
+
+    <div
+        class="crash-value"
+        id="crashValue">
+        1.00x
+    </div>
+
+    <div class="waiting">
+        Waiting for next round...
+    </div>
+
+    <div
+        class="countdown"
+        id="countdown">
+        3
+    </div>
+
+</div>
     <div
         class="history"
         id="history">
@@ -1448,28 +1529,43 @@ function startGame() {
 
                     let countdown = 3;
 
-const countdownTimer = setInterval(
-    function () {
+const overlay =
+    document.getElementById("roundOverlay");
 
-        document
-            .getElementById("gameMessage")
-            .textContent =
-            "Waiting for next round... " +
-            countdown;
+const crashValue =
+    document.getElementById("crashValue");
+
+const countdownDisplay =
+    document.getElementById("countdown");
+
+crashValue.textContent =
+    currentMultiplier.toFixed(2) + "x";
+
+overlay.classList.add("show");
+
+countdownDisplay.textContent =
+    countdown;
+
+const countdownTimer =
+    setInterval(function () {
 
         countdown--;
 
-        if (countdown < 0) {
+        if (countdown <= 0) {
 
             clearInterval(countdownTimer);
 
+            overlay.classList.remove("show");
+
             startGame();
 
+            return;
         }
 
-    },
-    1000
-);
+        countdownDisplay.textContent =
+            countdown;
+
+    }, 1000);
                 }
 
             },
