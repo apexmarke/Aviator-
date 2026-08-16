@@ -1446,10 +1446,30 @@ function startGame() {
                             .textContent = "$0.00";
                     }
 
-                    setTimeout(
-                        startGame,
-                        2500
-                    );
+                    let countdown = 3;
+
+const countdownTimer = setInterval(
+    function () {
+
+        document
+            .getElementById("gameMessage")
+            .textContent =
+            "Waiting for next round... " +
+            countdown;
+
+        countdown--;
+
+        if (countdown < 0) {
+
+            clearInterval(countdownTimer);
+
+            startGame();
+
+        }
+
+    },
+    1000
+);
                 }
 
             },
