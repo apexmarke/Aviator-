@@ -847,17 +847,9 @@ header {
     <div class="bet-card">
 
         <div class="tabs">
-
-            <button class="active">
-                Bet
-            </button>
-
-            <button>
-                Auto
-            </button>
-
+            <button class="active">Bet</button>
+            <button>Auto</button>
         </div>
-
 
         <div class="amount">
 
@@ -881,38 +873,30 @@ header {
 
         </div>
 
-
         <div class="quick">
 
-            <button
-                onclick="setAmount(100)">
+            <button onclick="setAmount(100)">
                 100
             </button>
 
-            <button
-                onclick="setAmount(250)">
+            <button onclick="setAmount(250)">
                 250
             </button>
 
-            <button
-                onclick="setAmount(1000)">
+            <button onclick="setAmount(1000)">
                 1,000
             </button>
 
-            <button
-                onclick="setAmount(25000)">
+            <button onclick="setAmount(25000)">
                 25,000
             </button>
 
         </div>
 
-
         <button
             class="action bet"
             onclick="placeBet()">
-
             BET
-
         </button>
 
     </div>
@@ -921,40 +905,26 @@ header {
     <div class="bet-card">
 
         <div class="tabs">
-
-            <button class="active">
-                Bet
-            </button>
-
-            <button>
-                Auto
-            </button>
-
+            <button class="active">Bet</button>
+            <button>Auto</button>
         </div>
 
+        <div class="amount">
 
-        <div class="potential-label">
-            POTENTIAL WINNINGS
-        </div>
-
-
-        <div class="potential">
-
-            <span id="potential">
-                $10.00
-            </span>
+            <input
+                type="text"
+                id="potential"
+                value="$10.00"
+                readonly>
 
         </div>
-
 
         <button
             class="action cash"
             id="cashButton"
             onclick="cashOut()"
             disabled>
-
             CASH OUT
-
         </button>
 
     </div>
