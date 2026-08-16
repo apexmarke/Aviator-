@@ -464,6 +464,35 @@ header {
         drop-shadow(0 0 6px rgba(255, 23, 68, .8))
         drop-shadow(0 0 14px rgba(255, 23, 68, .35));
     }
+    .plane {
+    position: absolute;
+    left: 12%;
+    bottom: 55px;
+    z-index: 6;
+    animation: aircraftFly 4s ease-in-out infinite;
+}
+
+@keyframes aircraftFly {
+
+    0% {
+        left: 10%;
+        bottom: 45px;
+        transform: rotate(-8deg);
+    }
+
+    50% {
+        left: 45%;
+        bottom: 120px;
+        transform: rotate(-15deg);
+    }
+
+    100% {
+        left: 78%;
+        bottom: 220px;
+        transform: rotate(-20deg);
+    }
+
+}
 </style>
 </head>
 
