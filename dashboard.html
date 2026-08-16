@@ -117,10 +117,13 @@ header {
 
 .plane {
     position: absolute;
-    left: 18%;
-    bottom: 25%;
-    font-size: 45px;
-    transform: rotate(-12deg);
+    left: 10%;
+    bottom: 45px;
+    z-index: 6;
+    transition:
+        left 0.1s linear,
+        bottom 0.1s linear,
+        transform 0.1s linear;
 }
 
 /* BETTING */
@@ -1035,6 +1038,28 @@ function startGame() {
             document.getElementById("multiplier")
                 .textContent =
                 currentMultiplier.toFixed(2) + "x";
+            const plane =
+    document.querySelector(".plane");
+
+if (plane) {
+
+    const progress =
+        Math.min(
+            (currentMultiplier - 1) / 8,
+            1
+        );
+
+    plane.style.left =
+        (10 + progress * 75) + "%";
+
+    plane.style.bottom =
+        (45 + progress * 180) + "px";
+
+    plane.style.transform =
+        "rotate(" +
+        (-8 - progress * 12) +
+        "deg)";
+}
 if (bet) {
 
     const amount =
