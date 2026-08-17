@@ -753,93 +753,79 @@ header {
 <section class="controls">
 
 
-    <!-- PANEL 1 -->
+    <!-- FIRST BET PANEL -->
 
-    <div class="bet-card">
+<div class="bet-card">
 
-        <div class="tabs">
+    <div class="tabs">
+        <button class="active">Bet</button>
+        <button>Auto</button>
+    </div>
 
-            <button class="active">
-                Bet
-            </button>
+    <div class="bet-layout">
 
-            <button>
-                Auto
-            </button>
+        <div class="bet-options">
 
-        </div>
+            <div class="amount">
 
+                <button
+                    class="amount-btn"
+                    onclick="changeAmount(1, -1)">
+                    −
+                </button>
 
-        <div class="bet-layout">
+                <input
+                    type="number"
+                    id="betAmount1"
+                    value="10"
+                    min="1">
 
-            <div>
-
-                <div class="amount">
-
-                    <button
-                        class="amount-btn"
-                        onclick="changeAmount(1,-1)">
-                        −
-                    </button>
-
-                    <input
-                        type="number"
-                        id="betAmount1"
-                        value="10"
-                        min="1">
-
-                    <button
-                        class="amount-btn"
-                        onclick="changeAmount(1,1)">
-                        +
-                    </button>
-
-                </div>
-
-
-                <div class="quick">
-
-                    <button
-                        onclick="setAmount(1,100)">
-                        100
-                    </button>
-
-                    <button
-                        onclick="setAmount(1,250)">
-                        250
-                    </button>
-
-                    <button
-                        onclick="setAmount(1,1000)">
-                        1,000
-                    </button>
-
-                    <button
-                        onclick="setAmount(1,25000)">
-                        25,000
-                    </button>
-
-                </div>
+                <button
+                    class="amount-btn"
+                    onclick="changeAmount(1, 1)">
+                    +
+                </button>
 
             </div>
 
+            <div class="quick">
 
-            <button
-                class="big-bet"
-                id="betButton1"
-                onclick="toggleBet(1)">
+                <button onclick="setAmount(1, 100)">
+                    100
+                </button>
 
-                <span>Bet</span>
+                <button onclick="setAmount(1, 250)">
+                    250
+                </button>
 
-                <small id="display1">
-                    10.00
-                </small>
+                <button onclick="setAmount(1, 1000)">
+                    1,000
+                </button>
 
-            </button>
+                <button onclick="setAmount(1, 25000)">
+                    25,000
+                </button>
+
+            </div>
 
         </div>
 
+        <button
+            class="big-bet"
+            id="betButton1"
+            onclick="toggleBet(1)">
+
+            <span>Bet</span>
+
+            <small id="display1">
+                10.00
+            </small>
+
+        </button>
+
     </div>
+
+</div>
 
 
     <!-- PANEL 2 -->
