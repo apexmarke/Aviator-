@@ -1720,31 +1720,45 @@ function startFlyingRound() {
                 }
 
 
-                const plane =
-                    el("plane");
+                const plane = el("plane");
 
-                if (plane) {
+if (plane) {
 
-                    const left =
-                        8 +
-                        elapsed * 3.5;
+    const game = document.querySelector(".game");
 
-                    const bottom =
-                        35 +
-                        elapsed * 2.2;
+    const elapsedLeft =
+        8 + elapsed * 3.5;
 
-                    plane.style.left =
-                        Math.min(
-                            left,
-                            88
-                        ) + "%";
+    const gameWidth =
+        game ? game.clientWidth : 400;
 
-                    plane.style.bottom =
-                        Math.min(
-                            bottom,
-                            260
-                        ) + "px";
-                }
+    const planeWidth =
+        plane.offsetWidth || 100;
+
+    const maxLeft =
+        ((gameWidth - planeWidth) / gameWidth) * 100;
+
+    const safeLeft =
+        Math.min(
+            elapsedLeft,
+            maxLeft - 2
+        );
+
+    const bottom =
+        35 + elapsed * 2.2;
+
+    plane.style.left =
+        Math.max(
+            0,
+            safeLeft
+        ) + "%";
+
+    plane.style.bottom =
+        Math.min(
+            bottom,
+            260
+        ) + "px";
+}
 
 
                 updateAllPotentialWinnings();
