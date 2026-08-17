@@ -1697,168 +1697,112 @@ function movePlane() {
 
 function startCountdown() {
 
-    bettingOpen =
-        true;
-
-    roundFlying =
-        false;
-
-    crashed =
-        false;
-
-
-    currentMultiplier =
-        1;
-
+    bettingOpen = true;
+    roundFlying = false;
+    crashed = false;
+    currentMultiplier = 1;
 
     const overlay =
-        getElement(
-            "roundOverlay"
-        );
-
+        document.getElementById("roundOverlay");
 
     const countdownDisplay =
-        getElement(
-            "countdown"
-        );
-
+        document.getElementById("countdown");
 
     const crashTitle =
-        document.querySelector(
-            ".crash-title"
-        );
-
+        document.querySelector(".crash-title");
 
     const crashValue =
-        getElement(
-            "crashValue"
-        );
-
+        document.getElementById("crashValue");
 
     const roundStatus =
-        getElement(
-            "roundStatus"
-        );
-
+        document.getElementById("roundStatus");
 
     const gameMessage =
-        getElement(
-            "gameMessage"
-        );
-
+        document.getElementById("gameMessage");
 
     /*
-       Hide crash message.
+       SHOW WAITING SCREEN
     */
 
     if (overlay) {
-
-        overlay.classList.remove(
-            "show"
-        );
-
+        overlay.classList.add("show");
     }
-
 
     if (crashTitle) {
-
-        crashTitle.style.display =
-            "none";
-
+        crashTitle.style.display = "none";
     }
-
 
     if (crashValue) {
-
-        crashValue.style.display =
-            "none";
-
+        crashValue.style.display = "none";
     }
-
 
     if (countdownDisplay) {
-
-        countdownDisplay.style.display =
-            "block";
-
-        countdownDisplay.textContent =
-            "10";
+        countdownDisplay.style.display = "block";
+        countdownDisplay.textContent = "10";
     }
-
 
     if (roundStatus) {
-
         roundStatus.textContent =
             "WAITING FOR NEXT ROUND";
-
     }
-
 
     if (gameMessage) {
-
         gameMessage.textContent =
             "Place your bets";
-
     }
 
-
     /*
-       Reset both panels for the
-       new betting period.
+       RESET BOTH PANELS
     */
 
-    for (
-        let panel = 1;
-        panel <= 2;
-        panel++
-    ) {
+    for (let panel = 1; panel <= 2; panel++) {
 
-        bets[panel] =
-            false;
+        bets[panel] = false;
 
         resetBetButton(panel);
     }
 
-
     updateBetButtons();
 
+    /*
+       10 SECOND COUNTDOWN
+    */
 
-    let countdown =
-        10;
+    let countdown = 10;
 
+    clearInterval(countdownTimer);
 
-    clearInterval(
-        countdownTimer
+    countdownTimer = setInterval(
+        function () {
+
+            countdown--;
+
+            if (countdownDisplay) {
+                countdownDisplay.textContent =
+                    countdown;
+            }
+
+            if (countdown <= 0) {
+
+                clearInterval(
+                    countdownTimer
+                );
+
+                /*
+                   HIDE WAITING SCREEN
+                   AND START FLIGHT
+                */
+
+                if (overlay) {
+                    overlay.classList.remove("show");
+                }
+
+                startFlyingRound();
+            }
+
+        },
+        1000
     );
-
-
-    countdownTimer =
-        setInterval(
-            function () {
-
-                countdown--;
-
-
-                if (countdownDisplay) {
-
-                    countdownDisplay.textContent =
-                        countdown;
-
-                }
-
-
-                if (countdown <= 0) {
-
-                    clearInterval(
-                        countdownTimer
-                    );
-
-                    startFlyingRound();
-                }
-
-            },
-            1000
-        );
 }
 
 
