@@ -1063,10 +1063,16 @@ if (
    GAME VARIABLES
 ========================================== */
 
-let balance =
-    parseFloat(
-        localStorage.getItem("aviatorBalance")
-    ) || 1000;
+let balance = parseFloat(
+    localStorage.getItem("aviatorBalance")
+);
+
+if (
+    isNaN(balance) ||
+    balance < 0
+) {
+    balance = 1000;
+}
 
 let currentMultiplier = 1;
 
@@ -1120,18 +1126,18 @@ function el(id) {
 
 function updateBalance() {
 
-    localStorage.setItem(
-        "aviatorBalance",
-        balance.toFixed(2)
-    );
-
     const display =
-        el("balance");
+        document.getElementById("balance");
 
     if (display) {
         display.textContent =
             balance.toFixed(2);
     }
+
+    localStorage.setItem(
+        "aviatorBalance",
+        balance.toFixed(2)
+    );
 }
 
 
