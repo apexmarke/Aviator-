@@ -7,6 +7,7 @@
 <title>Aviator Dashboard</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -151,16 +152,15 @@ header {
 
 .history span {
     flex-shrink: 0;
-
     background: #1a202c;
-
     padding: 7px 11px;
-
     border-radius: 15px;
-
     font-size: 12px;
-
     color: #65d6ff;
+}
+
+.history span.low {
+    color: #ff6565;
 }
 
 /* =========================
@@ -169,7 +169,6 @@ header {
 
 .game-status {
     position: absolute;
-
     top: 52px;
     left: 14px;
     right: 14px;
@@ -194,7 +193,6 @@ header {
 
 .multiplier {
     position: absolute;
-
     top: 43%;
     left: 50%;
 
@@ -209,15 +207,12 @@ header {
 
 .multiplier small {
     display: block;
-
     margin-bottom: 6px;
 
     color: #aeb5c5;
-
     font-size: 11px;
 
     text-transform: uppercase;
-
     letter-spacing: 1px;
 }
 
@@ -225,7 +220,6 @@ header {
     display: block;
 
     font-size: 64px;
-
     font-weight: 900;
 
     letter-spacing: -2px;
@@ -357,15 +351,12 @@ header {
 
 .round-overlay {
     position: absolute;
-
     inset: 0;
 
     display: none;
 
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -385,7 +376,6 @@ header {
     color: #ff1744;
 
     font-size: 42px;
-
     font-weight: 900;
 
     text-shadow:
@@ -397,7 +387,6 @@ header {
     margin-top: 5px;
 
     font-size: 58px;
-
     font-weight: 900;
 }
 
@@ -413,7 +402,6 @@ header {
     margin-top: 5px;
 
     font-size: 42px;
-
     font-weight: 900;
 
     color: white;
@@ -477,7 +465,6 @@ header {
 
 .tabs .active {
     background: #242424;
-
     color: #ddd;
 }
 
@@ -526,7 +513,6 @@ header {
 
 .amount input {
     width: 100%;
-
     height: 38px;
 
     border: none;
@@ -570,9 +556,12 @@ header {
     cursor: pointer;
 }
 
+/* =========================
+   MAIN BET BUTTON
+========================= */
+
 .big-bet {
     min-height: 105px;
-
     width: 100%;
 
     border: 2px solid #42933a;
@@ -588,17 +577,11 @@ header {
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     font-size: 25px;
 
     cursor: pointer;
-}
-
-.big-bet.cashout {
-    background: #159447;
-    border-color: #48b83d;
 }
 
 .big-bet span {
@@ -608,14 +591,31 @@ header {
 
 .big-bet small {
     margin-top: 2px;
-
     font-size: 20px;
 }
 
-.big-bet:disabled {
-    opacity: .35;
+/* ACTIVE CASH OUT */
 
-    cursor: not-allowed;
+.big-bet.cashout {
+    background: #159447;
+    border-color: #48b83d;
+    color: white;
+}
+
+/* NEXT ROUND */
+
+.big-bet.next-round {
+    background: #8b1111;
+    border-color: #ff1744;
+    color: #ff3b30;
+}
+
+.big-bet.next-round span {
+    color: #ff3b30;
+}
+
+.big-bet.next-round small {
+    color: #ff6565;
 }
 
 /* =========================
@@ -626,7 +626,6 @@ header {
 
     header {
         padding: 7px 8px;
-
         flex-wrap: wrap;
     }
 
@@ -640,28 +639,23 @@ header {
 
     .balance {
         padding: 8px 9px;
-
         font-size: 11px;
     }
 
     .header-right button {
         padding: 8px 6px;
-
         font-size: 10px;
     }
 
     .header-icon {
         width: 34px;
         height: 34px;
-
         padding: 0 !important;
-
         font-size: 16px !important;
     }
 
     .game {
         height: 360px;
-
         margin: 8px;
     }
 
@@ -691,6 +685,7 @@ header {
         font-size: 9px;
     }
 }
+
 </style>
 </head>
 
@@ -860,9 +855,7 @@ header {
 <section class="controls">
 
 
-    <!-- =====================
-         PANEL 1
-    ====================== -->
+    <!-- PANEL 1 -->
 
     <div class="bet-card">
 
@@ -908,23 +901,19 @@ header {
 
                 <div class="quick">
 
-                    <button
-                        onclick="setAmount(1, 100)">
+                    <button onclick="setAmount(1,100)">
                         100
                     </button>
 
-                    <button
-                        onclick="setAmount(1, 250)">
+                    <button onclick="setAmount(1,250)">
                         250
                     </button>
 
-                    <button
-                        onclick="setAmount(1, 1000)">
+                    <button onclick="setAmount(1,1000)">
                         1,000
                     </button>
 
-                    <button
-                        onclick="setAmount(1, 25000)">
+                    <button onclick="setAmount(1,25000)">
                         25,000
                     </button>
 
@@ -938,9 +927,7 @@ header {
                 id="betButton1"
                 onclick="toggleBet(1)">
 
-                <span>
-                    Bet
-                </span>
+                <span>Bet</span>
 
                 <small id="display1">
                     10.00
@@ -953,9 +940,7 @@ header {
     </div>
 
 
-    <!-- =====================
-         PANEL 2
-    ====================== -->
+    <!-- PANEL 2 -->
 
     <div class="bet-card">
 
@@ -980,7 +965,7 @@ header {
 
                     <button
                         class="amount-btn"
-                        onclick="changeAmount(2, -1)">
+                        onclick="changeAmount(2,-1)">
                         −
                     </button>
 
@@ -992,7 +977,7 @@ header {
 
                     <button
                         class="amount-btn"
-                        onclick="changeAmount(2, 1)">
+                        onclick="changeAmount(2,1)">
                         +
                     </button>
 
@@ -1001,23 +986,19 @@ header {
 
                 <div class="quick">
 
-                    <button
-                        onclick="setAmount(2, 100)">
+                    <button onclick="setAmount(2,100)">
                         100
                     </button>
 
-                    <button
-                        onclick="setAmount(2, 250)">
+                    <button onclick="setAmount(2,250)">
                         250
                     </button>
 
-                    <button
-                        onclick="setAmount(2, 1000)">
+                    <button onclick="setAmount(2,1000)">
                         1,000
                     </button>
 
-                    <button
-                        onclick="setAmount(2, 25000)">
+                    <button onclick="setAmount(2,25000)">
                         25,000
                     </button>
 
@@ -1031,9 +1012,7 @@ header {
                 id="betButton2"
                 onclick="toggleBet(2)">
 
-                <span>
-                    Bet
-                </span>
+                <span>Bet</span>
 
                 <small id="display2">
                     10.00
@@ -1050,19 +1029,13 @@ header {
 
 <script>
 
-
-/* ==========================================
-   AVIATOR DASHBOARD
-   TWO-PANEL + NEXT-ROUND BETTING SYSTEM
-========================================== */
-
-
 /* ==========================================
    LOGIN PROTECTION
 ========================================== */
 
 if (
-    localStorage.getItem("aviatorLoggedIn") !== "true"
+    localStorage.getItem("aviatorLoggedIn")
+    !== "true"
 ) {
     window.location.replace("login.html");
 }
@@ -1078,8 +1051,6 @@ let currentMultiplier = 1;
 
 let roundFlying = false;
 
-let bettingOpen = false;
-
 let crashed = false;
 
 let gameTimer = null;
@@ -1088,13 +1059,7 @@ let countdownTimer = null;
 
 
 /*
-   Each panel has two states:
-
-   currentBet
-   = bet currently active in the flying round
-
-   nextBet
-   = bet already placed for the next round
+   CURRENT ROUND BETS
 */
 
 let bets = {
@@ -1106,6 +1071,11 @@ let betAmounts = {
     1: 10,
     2: 10
 };
+
+
+/*
+   NEXT ROUND BETS
+*/
 
 let nextBets = {
     1: false,
@@ -1122,10 +1092,8 @@ let nextBetAmounts = {
    DOM HELPER
 ========================================== */
 
-function getElement(id) {
-
+function el(id) {
     return document.getElementById(id);
-
 }
 
 
@@ -1135,15 +1103,8 @@ function getElement(id) {
 
 function updateBalance() {
 
-    const balanceDisplay =
-        getElement("balance");
-
-    if (balanceDisplay) {
-
-        balanceDisplay.textContent =
-            balance.toFixed(2);
-
-    }
+    el("balance").textContent =
+        balance.toFixed(2);
 
 }
 
@@ -1165,130 +1126,67 @@ function logout() {
 
 
 /* ==========================================
-   AMOUNT FUNCTIONS
+   AMOUNT
 ========================================== */
 
 function setAmount(panel, amount) {
 
+    if (nextBets[panel]) {
+        return;
+    }
+
+    if (bets[panel]) {
+        return;
+    }
+
     const input =
-        getElement(
-            "betAmount" + panel
-        );
+        el("betAmount" + panel);
 
     if (!input) {
         return;
     }
 
+    input.value = amount;
 
-    /*
-       During the waiting period the amount
-       belongs to the NEXT round.
-    */
-
-    if (bettingOpen) {
-
-        if (nextBets[panel]) {
-            return;
-        }
-
-        input.value = amount;
-
-        nextBetAmounts[panel] =
-            amount;
-
-    } else {
-
-        /*
-           During flight, don't change an
-           already active bet.
-        */
-
-        if (bets[panel]) {
-            return;
-        }
-
-        input.value = amount;
-
-        nextBetAmounts[panel] =
-            amount;
-    }
-
+    nextBetAmounts[panel] =
+        amount;
 
     updatePanelDisplay(panel);
-
 }
 
 
 function changeAmount(panel, change) {
 
+    if (nextBets[panel]) {
+        return;
+    }
+
+    if (bets[panel]) {
+        return;
+    }
+
     const input =
-        getElement(
-            "betAmount" + panel
-        );
+        el("betAmount" + panel);
 
     if (!input) {
         return;
     }
 
-
-    /*
-       Don't change the amount after the
-       next-round bet has already been placed.
-    */
-
-    if (
-        bettingOpen &&
-        nextBets[panel]
-    ) {
-        return;
-    }
-
-
-    /*
-       Don't change current bet while
-       the plane is flying.
-    */
-
-    if (
-        roundFlying &&
-        bets[panel]
-    ) {
-        return;
-    }
-
-
     let value =
-        parseFloat(
-            input.value
-        ) || 1;
-
+        parseFloat(input.value) || 1;
 
     value += change;
-
 
     if (value < 1) {
         value = 1;
     }
 
-
     input.value = value;
 
-
-    if (bettingOpen) {
-
-        nextBetAmounts[panel] =
-            value;
-
-    } else {
-
-        nextBetAmounts[panel] =
-            value;
-
-    }
-
+    nextBetAmounts[panel] =
+        value;
 
     updatePanelDisplay(panel);
-
 }
 
 
@@ -1298,25 +1196,16 @@ function changeAmount(panel, change) {
 
 function updatePanelDisplay(panel) {
 
-    const input =
-        getElement(
-            "betAmount" + panel
-        );
-
     const display =
-        getElement(
-            "display" + panel
-        );
+        el("display" + panel);
 
-
-    if (!input || !display) {
+    if (!display) {
         return;
     }
 
 
     /*
-       If there is an active current bet,
-       show its current potential.
+       CURRENT ACTIVE BET
     */
 
     if (bets[panel]) {
@@ -1333,415 +1222,37 @@ function updatePanelDisplay(panel) {
 
 
     /*
-       If a next-round bet exists,
-       show that amount.
+       NEXT ROUND BET
     */
 
     if (nextBets[panel]) {
 
         display.textContent =
             nextBetAmounts[panel]
-                .toFixed(2);
+            .toFixed(2);
 
         return;
     }
 
 
     /*
-       Otherwise show the amount currently
-       entered in the input.
+       NORMAL BET AMOUNT
     */
+
+    const input =
+        el("betAmount" + panel);
+
+    const amount =
+        parseFloat(input.value) || 0;
 
     display.textContent =
-        parseFloat(
-            input.value || 0
-        ).toFixed(2);
+        amount.toFixed(2);
 
 }
 
 
 /* ==========================================
-   BUTTON DISPLAY
-========================================== */
-
-function updateButton(panel) {
-
-    const button =
-        getElement(
-            "betButton" + panel
-        );
-
-    if (!button) {
-        return;
-    }
-
-
-    /*
-       CURRENT ROUND ACTIVE
-    */
-
-    if (bets[panel]) {
-
-        button.innerHTML =
-            "<span>CASH OUT</span>" +
-            "<small id=\"display" +
-            panel +
-            "\">" +
-            (
-                betAmounts[panel] *
-                currentMultiplier
-            ).toFixed(2) +
-            "</small>";
-
-        button.style.background =
-            "#e66b19";
-
-        button.disabled =
-            false;
-
-        return;
-    }
-
-
-    /*
-       NEXT ROUND BET PLACED
-    */
-
-    if (nextBets[panel]) {
-
-        button.innerHTML =
-            "<span>NEXT ROUND</span>" +
-            "<small id=\"display" +
-            panel +
-            "\">" +
-            nextBetAmounts[panel]
-                .toFixed(2) +
-            "</small>";
-
-        button.style.background =
-            "#126b0b";
-
-        /*
-           During countdown the player can
-           cancel the next-round bet by
-           pressing the button again.
-        */
-
-        button.disabled =
-            false;
-
-        return;
-    }
-
-
-    /*
-       NORMAL BET BUTTON
-    */
-
-    const input =
-        getElement(
-            "betAmount" + panel
-        );
-
-    const amount =
-        input
-            ? parseFloat(input.value) || 10
-            : 10;
-
-
-    button.innerHTML =
-        "<span>BET</span>" +
-        "<small id=\"display" +
-        panel +
-        "\">" +
-        amount.toFixed(2) +
-        "</small>";
-
-
-    button.style.background =
-        "#126b0b";
-
-
-    /*
-       Betting is only available during
-       the waiting/countdown period.
-    */
-
-    button.disabled =
-        !bettingOpen;
-
-}
-
-
-/* ==========================================
-   UPDATE BOTH BUTTONS
-========================================== */
-
-function updateAllButtons() {
-
-    updateButton(1);
-
-    updateButton(2);
-
-}
-
-
-/* ==========================================
-   PLACE / CANCEL NEXT ROUND BET
-========================================== */
-
-function toggleBet(panel) {
-
-    /*
-       =====================================
-       CURRENT BET EXISTS
-       =====================================
-    */
-
-    if (bets[panel]) {
-
-        cashOutPanel(panel);
-
-        return;
-    }
-
-
-    /*
-       =====================================
-       NEXT ROUND BET EXISTS
-       =====================================
-    */
-
-    if (nextBets[panel]) {
-
-        cancelNextBet(panel);
-
-        return;
-    }
-
-
-    /*
-       =====================================
-       NO BET
-       =====================================
-    */
-
-    /*
-       New bets are ONLY accepted during
-       the countdown.
-    */
-
-    if (!bettingOpen) {
-
-        alert(
-            "Betting is closed. " +
-            "You can place your next bet " +
-            "during the countdown."
-        );
-
-        return;
-    }
-
-
-    const input =
-        getElement(
-            "betAmount" + panel
-        );
-
-
-    if (!input) {
-        return;
-    }
-
-
-    const amount =
-        parseFloat(
-            input.value
-        );
-
-
-    if (!amount || amount <= 0) {
-
-        alert(
-            "Enter a valid amount."
-        );
-
-        return;
-    }
-
-
-    if (amount > balance) {
-
-        alert(
-            "Insufficient demo balance."
-        );
-
-        return;
-    }
-
-
-    /*
-       Take the money immediately.
-
-       It is reserved for the NEXT round.
-    */
-
-    balance -= amount;
-
-
-    nextBetAmounts[panel] =
-        amount;
-
-
-    nextBets[panel] =
-        true;
-
-
-    updateBalance();
-
-    updateButton(panel);
-
-}
-
-
-/* ==========================================
-   CANCEL NEXT ROUND BET
-========================================== */
-
-function cancelNextBet(panel) {
-
-    if (!nextBets[panel]) {
-        return;
-    }
-
-
-    /*
-       Return the reserved money.
-    */
-
-    balance +=
-        nextBetAmounts[panel];
-
-
-    nextBets[panel] =
-        false;
-
-
-    updateBalance();
-
-    updateButton(panel);
-
-}
-
-
-/* ==========================================
-   ACTIVATE NEXT ROUND BETS
-========================================== */
-
-function activateNextBets() {
-
-    for (
-        let panel = 1;
-        panel <= 2;
-        panel++
-    ) {
-
-        /*
-           No next bet.
-        */
-
-        if (!nextBets[panel]) {
-            continue;
-        }
-
-
-        /*
-           Move next bet into current round.
-        */
-
-        bets[panel] =
-            true;
-
-
-        betAmounts[panel] =
-            nextBetAmounts[panel];
-
-
-        nextBets[panel] =
-            false;
-
-
-        /*
-           Current bet now becomes CASH OUT.
-        */
-
-        updateButton(panel);
-
-    }
-
-
-    updateAllPotentialWinnings();
-
-}
-
-
-/* ==========================================
-   CASH OUT CURRENT BET
-========================================== */
-
-function cashOutPanel(panel) {
-
-    if (!bets[panel]) {
-        return;
-    }
-
-
-    /*
-       Cash out is only possible while
-       the plane is flying.
-    */
-
-    if (!roundFlying) {
-        return;
-    }
-
-
-    const amount =
-        betAmounts[panel];
-
-
-    const winnings =
-        amount *
-        currentMultiplier;
-
-
-    balance += winnings;
-
-
-    bets[panel] =
-        false;
-
-
-    updateBalance();
-
-    updateButton(panel);
-
-    updateAllPotentialWinnings();
-
-
-    alert(
-        "Panel " +
-        panel +
-        " cashed out at " +
-        currentMultiplier.toFixed(2) +
-        "x"
-    );
-
-}
-
-
-/* ==========================================
-   UPDATE CURRENT POTENTIAL WINNINGS
+   UPDATE ALL ACTIVE BETS
 ========================================== */
 
 function updateAllPotentialWinnings() {
@@ -1756,25 +1267,19 @@ function updateAllPotentialWinnings() {
             continue;
         }
 
-
         const display =
-            getElement(
-                "display" + panel
-            );
-
-
-        if (!display) {
-            continue;
-        }
-
+            el("display" + panel);
 
         const potential =
             betAmounts[panel] *
             currentMultiplier;
 
+        if (display) {
 
-        display.textContent =
-            potential.toFixed(2);
+            display.textContent =
+                potential.toFixed(2);
+
+        }
 
     }
 
@@ -1782,7 +1287,135 @@ function updateAllPotentialWinnings() {
 
 
 /* ==========================================
-   CRASH CURRENT BETS
+   BUTTON STATE
+========================================== */
+
+function updateBetButton(panel) {
+
+    const button =
+        document.getElementById(
+            "betButton" + panel
+        );
+
+    if (!button) {
+        return;
+    }
+
+
+    /* ==========================================
+       CURRENT ROUND BET
+    ========================================== */
+
+    if (bets[panel]) {
+
+        button.classList.remove(
+            "next-round"
+        );
+
+        button.classList.add(
+            "cashout"
+        );
+
+        const potential =
+            betAmounts[panel] *
+            currentMultiplier;
+
+        button.innerHTML =
+            "<span>CASH OUT</span>" +
+            "<small id=\"display" +
+            panel +
+            "\">" +
+            potential.toFixed(2) +
+            "</small>";
+
+        return;
+    }
+
+
+    /* ==========================================
+       NEXT ROUND BET
+    ========================================== */
+
+    if (nextBets[panel]) {
+
+        button.classList.remove(
+            "cashout"
+        );
+
+        button.classList.add(
+            "next-round"
+        );
+
+        button.innerHTML =
+            "<span>NEXT ROUND</span>" +
+            "<small id=\"display" +
+            panel +
+            "\">" +
+            nextBetAmounts[panel]
+                .toFixed(2) +
+            "</small>";
+
+        return;
+    }
+
+
+    /* ==========================================
+       NORMAL BET BUTTON
+    ========================================== */
+
+    button.classList.remove(
+        "cashout",
+        "next-round"
+    );
+
+    button.innerHTML =
+        "<span>Bet</span>" +
+        "<small id=\"display" +
+        panel +
+        "\">" +
+        betAmounts[panel]
+            .toFixed(2) +
+        "</small>";
+}
+
+
+/* ==========================================
+   UPDATE BOTH POTENTIAL WINNINGS
+========================================== */
+
+function updateAllPotentialWinnings() {
+
+    for (
+        let panel = 1;
+        panel <= 2;
+        panel++
+    ) {
+
+        if (bets[panel]) {
+
+            const display =
+                document.getElementById(
+                    "display" + panel
+                );
+
+            if (display) {
+
+                const potential =
+                    betAmounts[panel] *
+                    currentMultiplier;
+
+                display.textContent =
+                    potential.toFixed(2);
+            }
+        }
+
+        updateBetButton(panel);
+    }
+}
+
+
+/* ==========================================
+   CRASH CURRENT ROUND BETS
 ========================================== */
 
 function crashAllBets() {
@@ -1794,320 +1427,64 @@ function crashAllBets() {
     ) {
 
         /*
-           Current bets that weren't cashed
-           out are lost.
+           Money already deducted when the
+           current bet was placed.
+
+           If the plane crashes before cash out,
+           that current bet is lost.
         */
 
-        bets[panel] =
-            false;
-
-
-        updateButton(panel);
-
+        bets[panel] = false;
     }
-
 }
 
 
 /* ==========================================
-   MOVE PLANE
+   MOVE NEXT BETS INTO CURRENT ROUND
 ========================================== */
 
-function movePlane() {
+function activateNextRoundBets() {
+
+    for (
+        let panel = 1;
+        panel <= 2;
+        panel++
+    ) {
+
+        if (nextBets[panel]) {
+
+            bets[panel] = true;
+
+            betAmounts[panel] =
+                nextBetAmounts[panel];
+
+            nextBets[panel] = false;
+        }
+    }
+
+    updateAllPotentialWinnings();
+}
+
+
+/* ==========================================
+   RESET PLANE
+========================================== */
+
+function resetPlane() {
 
     const plane =
-        getElement("plane");
-
+        document.getElementById("plane");
 
     if (!plane) {
         return;
     }
 
+    plane.style.left = "8%";
 
-    /*
-       Logarithmic movement prevents the
-       plane from disappearing too early
-       at high multipliers.
-    */
-
-    const progress =
-        Math.min(
-            Math.log(
-                currentMultiplier
-            ) /
-            Math.log(100),
-            1
-        );
-
-
-    const left =
-        8 +
-        progress * 78;
-
-
-    const bottom =
-        40 +
-        progress * 190;
-
-
-    const rotation =
-        -8 -
-        progress * 14;
-
-
-    plane.style.left =
-        left + "%";
-
-
-    plane.style.bottom =
-        bottom + "px";
-
+    plane.style.bottom = "35px";
 
     plane.style.transform =
-        "rotate(" +
-        rotation +
-        "deg)";
-
-}
-
-
-/* ==========================================
-   HISTORY
-========================================== */
-
-function addHistoryResult(multiplier) {
-
-    const history =
-        getElement("history");
-
-
-    if (!history) {
-        return;
-    }
-
-
-    const item =
-        document.createElement(
-            "span"
-        );
-
-
-    item.textContent =
-        multiplier.toFixed(2) +
-        "x";
-
-
-    if (multiplier < 2) {
-
-        item.classList.add(
-            "low"
-        );
-
-    }
-
-
-    history.prepend(item);
-
-
-    /*
-       Keep latest 12 results.
-    */
-
-    while (
-        history.children.length >
-        12
-    ) {
-
-        history.removeChild(
-            history.lastElementChild
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   WAITING / NEXT ROUND COUNTDOWN
-========================================== */
-
-function startCountdown() {
-
-    /*
-       Betting is now OPEN.
-    */
-
-    bettingOpen =
-        true;
-
-    roundFlying =
-        false;
-
-    crashed =
-        false;
-
-    currentMultiplier =
-        1;
-
-
-    const overlay =
-        getElement(
-            "roundOverlay"
-        );
-
-
-    const countdownDisplay =
-        getElement(
-            "countdown"
-        );
-
-
-    const crashTitle =
-        document.querySelector(
-            ".crash-title"
-        );
-
-
-    const crashValue =
-        getElement(
-            "crashValue"
-        );
-
-
-    const roundStatus =
-        getElement(
-            "roundStatus"
-        );
-
-
-    const gameMessage =
-        getElement(
-            "gameMessage"
-        );
-
-
-    /*
-       Show waiting overlay.
-    */
-
-    if (overlay) {
-
-        overlay.classList.add(
-            "show"
-        );
-
-    }
-
-
-    if (crashTitle) {
-
-        crashTitle.style.display =
-            "none";
-
-    }
-
-
-    if (crashValue) {
-
-        crashValue.style.display =
-            "none";
-
-    }
-
-
-    if (countdownDisplay) {
-
-        countdownDisplay.style.display =
-            "block";
-
-        countdownDisplay.textContent =
-            "10";
-
-    }
-
-
-    if (roundStatus) {
-
-        roundStatus.textContent =
-            "WAITING FOR NEXT ROUND";
-
-    }
-
-
-    if (gameMessage) {
-
-        gameMessage.textContent =
-            "Place your next bet";
-
-    }
-
-
-    /*
-       IMPORTANT:
-       Do NOT erase nextBets here.
-
-       They belong to the upcoming round.
-    */
-
-    updateAllButtons();
-
-
-    let countdown =
-        10;
-
-
-    clearInterval(
-        countdownTimer
-    );
-
-
-    countdownTimer =
-        setInterval(
-            function () {
-
-                countdown--;
-
-
-                if (countdownDisplay) {
-
-                    countdownDisplay.textContent =
-                        countdown;
-
-                }
-
-
-                if (countdown <= 0) {
-
-                    clearInterval(
-                        countdownTimer
-                    );
-
-
-                    /*
-                       Hide countdown.
-                    */
-
-                    if (overlay) {
-
-                        overlay.classList.remove(
-                            "show"
-                        );
-
-                    }
-
-
-                    /*
-                       Start the next round.
-                    */
-
-                    startFlyingRound();
-
-                }
-
-            },
-            1000
-        );
-
+        "rotate(0deg)";
 }
 
 
@@ -2117,175 +1494,187 @@ function startCountdown() {
 
 function startFlyingRound() {
 
-    /*
-       Close betting.
-    */
+    clearInterval(gameTimer);
 
-    bettingOpen =
-        false;
+    roundFlying = true;
 
-    roundFlying =
-        true;
+    bettingOpen = false;
 
-    crashed =
-        false;
+    crashed = false;
 
-    currentMultiplier =
-        1;
+    currentMultiplier = 1;
+
+    resetPlane();
 
 
-    /*
-       Move NEXT ROUND bets into
-       CURRENT ROUND.
-    */
+    const overlay =
+        document.getElementById(
+            "roundOverlay"
+        );
 
-    activateNextBets();
+    if (overlay) {
+
+        overlay.classList.remove(
+            "show"
+        );
+    }
 
 
-    const roundStatus =
-        getElement(
+    const status =
+        document.getElementById(
             "roundStatus"
         );
 
+    if (status) {
 
-    const gameMessage =
-        getElement(
+        status.textContent =
+            "FLYING";
+
+        status.style.color =
+            "#65d6ff";
+    }
+
+
+    const message =
+        document.getElementById(
             "gameMessage"
         );
 
+    if (message) {
 
-    const multiplierDisplay =
-        getElement(
+        message.textContent =
+            "Round in progress...";
+    }
+
+
+    const multiplier =
+        document.getElementById(
             "multiplier"
         );
 
+    if (multiplier) {
 
-    const plane =
-        getElement(
-            "plane"
-        );
-
-
-    /*
-       Update status.
-    */
-
-    if (roundStatus) {
-
-        roundStatus.textContent =
-            "DEMO ROUND";
-
-    }
-
-
-    if (gameMessage) {
-
-        gameMessage.textContent =
-            "Round in progress";
-
-    }
-
-
-    if (multiplierDisplay) {
-
-        multiplierDisplay.textContent =
-            "1.00x";
-
-        multiplierDisplay.classList.remove(
+        multiplier.classList.remove(
             "crashed"
         );
 
+        multiplier.textContent =
+            "1.00x";
     }
 
 
     /*
-       Reset plane.
+       NEXT ROUND BETS become
+       CURRENT ROUND BETS.
     */
 
-    if (plane) {
+    activateNextRoundBets();
 
-        plane.style.left =
-            "8%";
 
-        plane.style.bottom =
-            "40px";
+    /*
+       Make sure buttons immediately
+       change from NEXT ROUND to CASH OUT.
+    */
 
-        plane.style.transform =
-            "rotate(-8deg)";
+    for (
+        let panel = 1;
+        panel <= 2;
+        panel++
+    ) {
 
+        updateBetButton(panel);
     }
 
 
-    /*
-       Active bets remain CASH OUT.
-
-       Empty panels are disabled.
-    */
-
-    updateAllButtons();
+    let startTime =
+        Date.now();
 
 
-    /*
-       Generate crash point.
+    gameTimer = setInterval(
+        function () {
 
-       Demo only.
-    */
-
-    const crashPoint =
-        1.20 +
-        Math.random() * 98.80;
+            const elapsed =
+                (Date.now() -
+                    startTime) / 1000;
 
 
-    clearInterval(
-        gameTimer
+            /*
+               Multiplier growth
+            */
+
+            currentMultiplier =
+                1 +
+                elapsed *
+                0.18;
+
+
+            /*
+               Display multiplier
+            */
+
+            if (multiplier) {
+
+                multiplier.textContent =
+                    currentMultiplier
+                        .toFixed(2) +
+                    "x";
+            }
+
+
+            /*
+               Move plane
+            */
+
+            const plane =
+                document.getElementById(
+                    "plane"
+                );
+
+            if (plane) {
+
+                const left =
+                    8 +
+                    elapsed * 3.5;
+
+                const bottom =
+                    35 +
+                    elapsed * 2.2;
+
+                plane.style.left =
+                    Math.min(
+                        left,
+                        88
+                    ) + "%";
+
+                plane.style.bottom =
+                    Math.min(
+                        bottom,
+                        260
+                    ) + "px";
+
+                plane.style.transform =
+                    "rotate(-8deg)";
+            }
+
+
+            /*
+               Demo crash point.
+
+               Random crash point is chosen
+               for each round.
+            */
+
+            if (
+                currentMultiplier >=
+                window.aviatorCrashPoint
+            ) {
+
+                crashRound();
+            }
+
+        },
+        100
     );
-
-
-    gameTimer =
-        setInterval(
-            function () {
-
-                currentMultiplier +=
-                    0.03 +
-                    currentMultiplier *
-                    0.0015;
-
-
-                if (multiplierDisplay) {
-
-                    multiplierDisplay.textContent =
-                        currentMultiplier.toFixed(2) +
-                        "x";
-
-                }
-
-
-                movePlane();
-
-                updateAllPotentialWinnings();
-
-
-                /*
-                   Crash.
-                */
-
-                if (
-                    currentMultiplier >=
-                    crashPoint
-                ) {
-
-                    clearInterval(
-                        gameTimer
-                    );
-
-                    crashRound();
-
-                }
-
-            },
-            100
-        );
-
 }
 
 
@@ -2295,146 +1684,109 @@ function startFlyingRound() {
 
 function crashRound() {
 
-    roundFlying =
-        false;
-
-    bettingOpen =
-        false;
-
-    crashed =
-        true;
+    if (!roundFlying) {
+        return;
+    }
 
 
-    const finalMultiplier =
+    clearInterval(gameTimer);
+
+    gameTimer = null;
+
+    roundFlying = false;
+
+    bettingOpen = false;
+
+    crashed = true;
+
+
+    const crashPoint =
         currentMultiplier;
 
 
-    const multiplierDisplay =
-        getElement(
+    /*
+       Update multiplier
+    */
+
+    const multiplier =
+        document.getElementById(
             "multiplier"
         );
 
+    if (multiplier) {
 
-    const overlay =
-        getElement(
-            "roundOverlay"
+        multiplier.textContent =
+            crashPoint.toFixed(2) +
+            "x";
+
+        multiplier.classList.add(
+            "crashed"
         );
-
-
-    const crashTitle =
-        document.querySelector(
-            ".crash-title"
-        );
-
-
-    const crashValue =
-        getElement(
-            "crashValue"
-        );
-
-
-    const countdownDisplay =
-        getElement(
-            "countdown"
-        );
-
-
-    const roundStatus =
-        getElement(
-            "roundStatus"
-        );
-
-
-    const gameMessage =
-        getElement(
-            "gameMessage"
-        );
+    }
 
 
     /*
-       Display crash.
+       Crash current bets.
     */
 
-    if (multiplierDisplay) {
-
-        multiplierDisplay.textContent =
-            "CRASHED";
-
-        multiplierDisplay.classList.add(
-            "crashed"
-        );
-
-    }
+    crashAllBets();
 
 
     /*
        Show crash overlay.
     */
 
+    const crashValue =
+        document.getElementById(
+            "crashValue"
+        );
+
+    if (crashValue) {
+
+        crashValue.textContent =
+            crashPoint.toFixed(2) +
+            "x";
+    }
+
+
+    const overlay =
+        document.getElementById(
+            "roundOverlay"
+        );
+
     if (overlay) {
 
         overlay.classList.add(
             "show"
         );
-
     }
 
 
-    if (crashTitle) {
+    const status =
+        document.getElementById(
+            "roundStatus"
+        );
 
-        crashTitle.style.display =
-            "block";
+    if (status) {
 
+        status.textContent =
+            "NEXT ROUND";
+
+        status.style.color =
+            "#ff1744";
     }
 
 
-    if (crashValue) {
+    const message =
+        document.getElementById(
+            "gameMessage"
+        );
 
-        crashValue.style.display =
-            "block";
+    if (message) {
 
-        crashValue.textContent =
-            finalMultiplier.toFixed(2) +
-            "x";
-
-    }
-
-
-    if (countdownDisplay) {
-
-        countdownDisplay.style.display =
-            "none";
-
-    }
-
-
-    if (roundStatus) {
-
-        roundStatus.textContent =
-            "CRASHED";
-
-    }
-
-
-    if (gameMessage) {
-
-        gameMessage.textContent =
+        message.textContent =
             "Waiting for next round...";
-
     }
-
-
-    /*
-       Lose current bets that weren't
-       cashed out.
-
-       IMPORTANT:
-       nextBets do not exist yet here
-       because they are only accepted
-       during the countdown.
-    */
-
-    crashAllBets();
 
 
     /*
@@ -2442,25 +1794,264 @@ function crashRound() {
     */
 
     addHistoryResult(
-        finalMultiplier
+        crashPoint
     );
 
 
     /*
-       Wait 2.5 seconds before opening
-       the 10-second next-round betting
-       period.
+       Reset current buttons.
+
+       Existing NEXT ROUND bets remain
+       waiting for the next round.
     */
 
-    setTimeout(
-        function () {
+    for (
+        let panel = 1;
+        panel <= 2;
+        panel++
+    ) {
 
-            startCountdown();
+        updateBetButton(panel);
+    }
 
-        },
-        2500
+
+    /*
+       Start 10-second countdown.
+    */
+
+    startNextRoundCountdown();
+}
+
+
+/* ==========================================
+   HISTORY
+========================================== */
+
+function addHistoryResult(value) {
+
+    const history =
+        document.getElementById(
+            "history"
+        );
+
+    if (!history) {
+        return;
+    }
+
+
+    const item =
+        document.createElement("span");
+
+
+    item.textContent =
+        value.toFixed(2) +
+        "x";
+
+
+    if (value < 2) {
+
+        item.classList.add(
+            "low"
+        );
+    }
+
+
+    history.insertBefore(
+        item,
+        history.firstChild
     );
+}
 
+
+/* ==========================================
+   NEXT ROUND COUNTDOWN
+========================================== */
+
+function startNextRoundCountdown() {
+
+    clearInterval(countdownTimer);
+
+
+    bettingOpen = true;
+
+
+    const overlay =
+        document.getElementById(
+            "roundOverlay"
+        );
+
+    if (overlay) {
+
+        overlay.classList.add(
+            "show"
+        );
+    }
+
+
+    const waiting =
+        document.querySelector(
+            ".waiting"
+        );
+
+    if (waiting) {
+
+        waiting.textContent =
+            "Waiting for next round...";
+    }
+
+
+    let countdown = 10;
+
+
+    const countdownDisplay =
+        document.getElementById(
+            "countdown"
+        );
+
+
+    if (countdownDisplay) {
+
+        countdownDisplay.textContent =
+            countdown;
+    }
+
+
+    /*
+       During countdown the status says
+       NEXT ROUND in red.
+    */
+
+    const status =
+        document.getElementById(
+            "roundStatus"
+        );
+
+    if (status) {
+
+        status.textContent =
+            "NEXT ROUND";
+
+        status.style.color =
+            "#ff1744";
+    }
+
+
+    /*
+       Allow users to place bets for
+       the NEXT round.
+    */
+
+    for (
+        let panel = 1;
+        panel <= 2;
+        panel++
+    ) {
+
+        updateBetButton(panel);
+    }
+
+
+    countdownTimer =
+        setInterval(
+            function () {
+
+                countdown--;
+
+
+                if (
+                    countdownDisplay
+                ) {
+
+                    countdownDisplay
+                        .textContent =
+                        countdown;
+                }
+
+
+                if (countdown <= 0) {
+
+                    clearInterval(
+                        countdownTimer
+                    );
+
+                    countdownTimer =
+                        null;
+
+                    bettingOpen =
+                        false;
+
+
+                    /*
+                       Hide crash overlay.
+                    */
+
+                    if (overlay) {
+
+                        overlay.classList.remove(
+                            "show"
+                        );
+                    }
+
+
+                    /*
+                       Start the next
+                       flying round.
+                    */
+
+                    createNextCrashPoint();
+
+                    startFlyingRound();
+                }
+
+            },
+            1000
+        );
+}
+
+
+/* ==========================================
+   RANDOM CRASH POINT
+========================================== */
+
+function createNextCrashPoint() {
+
+    /*
+       Demo crash point.
+
+       This is only for the demo game.
+    */
+
+    const random =
+        Math.random();
+
+
+    if (random < 0.55) {
+
+        window.aviatorCrashPoint =
+            1.20 +
+            Math.random() * 1.80;
+
+    }
+    else if (random < 0.85) {
+
+        window.aviatorCrashPoint =
+            3.00 +
+            Math.random() * 4.00;
+
+    }
+    else if (random < 0.97) {
+
+        window.aviatorCrashPoint =
+            7.00 +
+            Math.random() * 8.00;
+
+    }
+    else {
+
+        window.aviatorCrashPoint =
+            15.00 +
+            Math.random() * 35.00;
+    }
 }
 
 
@@ -2468,10 +2059,33 @@ function crashRound() {
    START GAME
 ========================================== */
 
-updateBalance();
+function startAviatorGame() {
 
-startCountdown();
+    createNextCrashPoint();
+
+    startNextRoundCountdown();
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        updateBalance();
+
+        updateBetButton(1);
+
+        updateBetButton(2);
+
+        startAviatorGame();
+
+    }
+);
+
 </script>
-
 </body>
 </html>
