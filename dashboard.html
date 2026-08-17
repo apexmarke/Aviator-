@@ -1233,23 +1233,24 @@ function updateDisplay(panel) {
 
 
 /* ==========================================
-   BET BUTTON DISPLAY
+   UPDATE BET BUTTON
 ========================================== */
 
 function updateBetButton(panel) {
 
     const button =
-        el("betButton" + panel);
+        document.getElementById(
+            "betButton" + panel
+        );
 
-    const display =
-        el("display" + panel);
-
-    if (!button || !display) {
+    if (!button) {
         return;
     }
 
 
-    /* CURRENT BET = CASH OUT */
+    /* =========================
+       CURRENT ROUND BET
+    ========================= */
 
     if (bets[panel]) {
 
@@ -1260,12 +1261,6 @@ function updateBetButton(panel) {
         button.classList.add(
             "cashout"
         );
-
-        display.textContent =
-            (
-                betAmounts[panel] *
-                currentMultiplier
-            ).toFixed(2);
 
         button.innerHTML =
             "<span>CASH OUT</span>" +
@@ -1278,11 +1273,17 @@ function updateBetButton(panel) {
             ).toFixed(2) +
             "</small>";
 
+        button.onclick = function () {
+            cashOutPanel(panel);
+        };
+
         return;
     }
 
 
-    /* NEXT ROUND = RED */
+    /* =========================
+       NEXT ROUND BET
+    ========================= */
 
     if (nextBets[panel]) {
 
@@ -1296,49 +1297,55 @@ function updateBetButton(panel) {
 
         button.innerHTML =
             "<span>NEXT ROUND</span>" +
-            "<small id=\"display" +
-            panel +
-            "\">" +
-            nextBetAmounts[panel]
-                .toFixed(2) +
+            "<small>" +
+            nextBetAmounts[panel].toFixed(2) +
+            "</small>" +
+            "<small " +
+            "style=\"font-size:12px;color:#ff1744;margin-top:5px;\">" +
+            "CANCEL" +
             "</small>";
+
+        button.onclick = function () {
+            cancelNextBet(panel);
+        };
 
         return;
     }
 
 
-    /* NORMAL BET */
+    /* =========================
+       NORMAL BET
+    ========================= */
 
     button.classList.remove(
         "cashout",
         "next-round"
     );
 
-    const input =
-        el("betAmount" + panel);
-
-    const amount =
-        input ?
-        parseFloat(input.value) || 0 :
-        0;
-
     button.innerHTML =
-        "<span>Bet</span>" +
+        "<span>BET</span>" +
         "<small id=\"display" +
         panel +
         "\">" +
-        amount.toFixed(2) +
+        nextBetAmounts[panel].toFixed(2) +
         "</small>";
+
+    button.onclick = function () {
+        toggleBet(panel);
+    };
+
 }
 
 
 /* ==========================================
-   PLACE BET
+   TOGGLE BET
 ========================================== */
 
 function toggleBet(panel) {
 
-    /* CURRENT BET → CASH OUT */
+    /* =========================
+       CURRENT BET → CASH OUT
+    ========================= */
 
     if (bets[panel]) {
 
@@ -1348,15 +1355,21 @@ function toggleBet(panel) {
     }
 
 
-    /* Already reserved for next round */
+    /* =========================
+       ALREADY QUEUED
+       → DO NOTHING
+    ========================= */
 
     if (nextBets[panel]) {
+
         return;
     }
 
 
     const input =
-        el("betAmount" + panel);
+        document.getElementById(
+            "betAmount" + panel
+        );
 
     if (!input) {
         return;
@@ -1366,6 +1379,10 @@ function toggleBet(panel) {
     const amount =
         parseFloat(input.value);
 
+
+    /* =========================
+       VALIDATE AMOUNT
+    ========================= */
 
     if (!amount || amount <= 0) {
 
@@ -1387,24 +1404,101 @@ function toggleBet(panel) {
     }
 
 
-    /*
-       Whether countdown or flying,
-       this bet belongs to the NEXT round.
-    */
-
-    balance -= amount;
+    /* =========================
+       SAVE AMOUNT
+    ========================= */
 
     nextBetAmounts[panel] =
         amount;
 
-    nextBets[panel] =
-        true;
+
+    /*
+       If the plane is currently flying,
+       this becomes a NEXT ROUND bet.
+
+       If betting is open, it will become
+       the current bet when the round starts.
+    */
+
+    nextBets[panel] = true;
+
+
+    /* =========================
+       TAKE MONEY FROM BALANCE
+    ========================= */
+
+    balance -= amount;
 
     updateBalance();
 
+
+    /* =========================
+       UPDATE BUTTON
+    ========================= */
+
     updateBetButton(panel);
+
 }
 
+
+/* ==========================================
+   CANCEL NEXT-ROUND BET
+========================================== */
+
+function cancelNextBet(panel) {
+
+    /* No queued bet */
+    if (!nextBets[panel]) {
+        return;
+    }
+
+
+    const amount =
+        nextBetAmounts[panel];
+
+
+    /* =========================
+       RETURN MONEY
+    ========================= */
+
+    balance += amount;
+
+
+    /* Remove queued bet */
+    nextBets[panel] = false;
+
+
+    /* =========================
+       UPDATE BALANCE
+    ========================= */
+
+    updateBalance();
+
+
+    /* =========================
+       RESTORE NORMAL BUTTON
+    ========================= */
+
+    updateBetButton(panel);
+
+
+    /* =========================
+       UPDATE DISPLAY
+    ========================= */
+
+    const display =
+        document.getElementById(
+            "display" + panel
+        );
+
+    if (display) {
+
+        display.textContent =
+            amount.toFixed(2);
+
+    }
+
+}
 
 /* ==========================================
    CASH OUT
