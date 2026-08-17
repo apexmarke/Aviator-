@@ -1063,7 +1063,10 @@ if (
    GAME VARIABLES
 ========================================== */
 
-let balance = 1000;
+let balance =
+    parseFloat(
+        localStorage.getItem("aviatorBalance")
+    ) || 1000;
 
 let currentMultiplier = 1;
 
@@ -1117,7 +1120,13 @@ function el(id) {
 
 function updateBalance() {
 
-    const display = el("balance");
+    localStorage.setItem(
+        "aviatorBalance",
+        balance.toFixed(2)
+    );
+
+    const display =
+        el("balance");
 
     if (display) {
         display.textContent =
